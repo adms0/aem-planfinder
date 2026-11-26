@@ -1,0 +1,21 @@
+{
+  "name": "planfinder-ui-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:vite": "vite build",
+    "sync:clientlib": "node ./scripts/sync-clientlib.mjs",
+    "build": "pnpm run build:vite && pnpm run sync:clientlib",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "sass": "~1.85.1",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
+  }
+}
