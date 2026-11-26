@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:template="/conf/planfinder/settings/wcm/templates/content-page"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Protection Plans"
+        sling:resourceType="planfinder/components/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="planfinder/components/container">
+            <plan_comparison
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="planfinder/components/plan-comparison"
+                heading="Compare Protection Plans"
+                subheading="Evaluate hospital coverage, annual benefit limits, and age-adjusted monthly or annual premiums."
+                defaultCycle="monthly"
+                annualDiscountPercent="{Long}15"
+                currencyCode="IDR"
+                disclaimer="Illustrative rates only. Final underwriting terms depend on medical disclosure and policy issuance.">
+                <plans jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        id="primacare-essential"
+                        title="PrimaCare Essential"
+                        category="health"
+                        monthlyRate="{Long}420000"
+                        roomLimit="IDR 1,500,000 / day"
+                        annualLimit="IDR 1,500,000,000"
+                        featured="{Boolean}false"
+                        ctaLabel="Choose Essential"
+                        ctaLink="/content/planfinder/id/en/apply/primacare-essential"
+                        features="[Cashless hospital admission,Inpatient surgery &amp; ICU,Pre- and post-hospitalization 30 days]"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        id="primacare-plus"
+                        title="PrimaCare Plus"
+                        category="health"
+                        badge="Most Selected"
+                        monthlyRate="{Long}780000"
+                        roomLimit="IDR 3,000,000 / day"
+                        annualLimit="IDR 4,000,000,000"
+                        featured="{Boolean}true"
+                        ctaLabel="Choose Plus"
+                        ctaLink="/content/planfinder/id/en/apply/primacare-plus"
+                        features="[Private 1-bed suite worldwide (excl. US),Annual health check-up allowance,No-claim renewal bonus 10%]"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        id="lifeshield-family"
+                        title="LifeShield Family"
+                        category="life"
+                        monthlyRate="{Long}560000"
+                        roomLimit="Sum Assured IDR 1.2B"
+                        annualLimit="IDR 1,200,000,000"
+                        featured="{Boolean}false"
+                        ctaLabel="Choose LifeShield"
+                        ctaLink="/content/planfinder/id/en/apply/lifeshield-family"
+                        features="[Term life protection up to age 75,Accidental death additional benefit,Waiver of premium on total disability]"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        id="criticalguard-max"
+                        title="CriticalGuard Max"
+                        category="critical"
+                        badge="Comprehensive"
+                        monthlyRate="{Long}910000"
+                        roomLimit="Lump-sum payout"
+                        annualLimit="IDR 2,500,000,000"
+                        featured="{Boolean}false"
+                        ctaLabel="Choose CriticalGuard"
+                        ctaLink="/content/planfinder/id/en/apply/criticalguard-max"
+                        features="[Covers 68 early &amp; late-stage conditions,Multiple claim payout structure,Second medical opinion service]"/>
+                </plans>
+            </plan_comparison>
+        </root>
+    </jcr:content>
+</jcr:root>

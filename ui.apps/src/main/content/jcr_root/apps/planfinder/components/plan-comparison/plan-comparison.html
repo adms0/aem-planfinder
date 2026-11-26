@@ -1,0 +1,148 @@
+<sly data-sly-use.model="id.adly.planfinder.core.models.PlanComparisonModel"
+     data-sly-use.placeholderTemplate="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.hasContent="${!model.empty}">
+    <section class="cmp-plan-comparison"
+             data-cmp-is="plan-comparison"
+             data-default-cycle="${model.defaultCycle}"
+             data-annual-discount="${model.annualDiscountPercent}"
+             data-currency="${model.currencyCode}">
+        <header class="cmp-plan-comparison__header">
+            <div class="cmp-plan-comparison__intro">
+                <h2 class="cmp-plan-comparison__heading"
+                    data-sly-test="${model.heading}">${model.heading}</h2>
+                <p class="cmp-plan-comparison__subheading"
+                   data-sly-test="${model.subheading}">${model.subheading}</p>
+            </div>
+
+            <div class="cmp-plan-comparison__controls">
+                <div class="cmp-plan-comparison__filters" role="group" aria-label="Filter by coverage category">
+                    <button type="button"
+                            class="cmp-plan-comparison__filter-btn is-active"
+                            data-cmp-hook-plan="filterBtn"
+                            data-filter="all"
+                            aria-pressed="true">All Plans</button>
+                    <button type="button"
+                            class="cmp-plan-comparison__filter-btn"
+                            data-cmp-hook-plan="filterBtn"
+                            data-filter="health"
+                            aria-pressed="false">Health</button>
+                    <button type="button"
+                            class="cmp-plan-comparison__filter-btn"
+                            data-cmp-hook-plan="filterBtn"
+                            data-filter="life"
+                            aria-pressed="false">Life</button>
+                    <button type="button"
+                            class="cmp-plan-comparison__filter-btn"
+                            data-cmp-hook-plan="filterBtn"
+                            data-filter="critical"
+                            aria-pressed="false">Critical Illness</button>
+                </div>
+
+                <div class="cmp-plan-comparison__pricing-controls">
+                    <label class="cmp-plan-comparison__age-field">
+                        <span class="cmp-plan-comparison__control-label">Age Band</span>
+                        <select class="cmp-plan-comparison__age-select"
+                                data-cmp-hook-plan="ageBand"
+                                aria-label="Age band">
+                            <option value="1.0" selected>18 - 30 yrs</option>
+                            <option value="1.35">31 - 45 yrs</option>
+                            <option value="1.85">46 - 60 yrs</option>
+                        </select>
+                    </label>
+
+                    <div class="cmp-plan-comparison__cycle-toggle" role="group" aria-label="Billing cycle">
+                        <button type="button"
+                                class="cmp-plan-comparison__cycle-btn ${model.defaultCycle != 'annual' ? 'is-active' : ''}"
+                                data-cmp-hook-plan="cycleBtn"
+                                data-cycle="monthly"
+                                aria-pressed="${model.defaultCycle != 'annual' ? 'true' : 'false'}">Monthly</button>
+                        <button type="button"
+                                class="cmp-plan-comparison__cycle-btn ${model.defaultCycle == 'annual' ? 'is-active' : ''}"
+                                data-cmp-hook-plan="cycleBtn"
+                                data-cycle="annual"
+                                aria-pressed="${model.defaultCycle == 'annual' ? 'true' : 'false'}">
+                            Annual
+                            <span class="cmp-plan-comparison__discount-tag"
+                                  data-sly-test="${model.annualDiscountPercent > 0}">Save ${model.annualDiscountPercent}%</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="cmp-plan-comparison__grid" data-sly-list.plan="${model.plans}">
+            <article class="cmp-plan-comparison__card ${plan.featured ? 'cmp-plan-comparison__card--featured' : ''}"
+                     data-cmp-hook-plan="card"
+                     data-plan-id="${plan.id}"
+                     data-plan-title="${plan.title}"
+                     data-category="${plan.category}"
+                     data-monthly-rate="${plan.monthlyRate}"
+                     data-room-limit="${plan.roomLimit}"
+                     data-annual-limit="${plan.annualLimit}">
+                <div class="cmp-plan-comparison__card-top">
+                    <div class="cmp-plan-comparison__card-meta">
+                        <span class="cmp-plan-comparison__category">${plan.category}</span>
+                        <span class="cmp-plan-comparison__badge"
+                              data-sly-test="${plan.badge}">${plan.badge}</span>
+                    </div>
+                    <h3 class="cmp-plan-comparison__card-title">${plan.title}</h3>
+                </div>
+
+                <div class="cmp-plan-comparison__price-block">
+                    <div class="cmp-plan-comparison__price"
+                         data-cmp-hook-plan="price">${plan.monthlyRate}</div>
+                    <div class="cmp-plan-comparison__period"
+                         data-cmp-hook-plan="period">per month</div>
+                </div>
+
+                <dl class="cmp-plan-comparison__limits">
+                    <div class="cmp-plan-comparison__limit-row" data-sly-test="${plan.roomLimit}">
+                        <dt>Hospital / Room</dt>
+                        <dd>${plan.roomLimit}</dd>
+                    </div>
+                    <div class="cmp-plan-comparison__limit-row" data-sly-test="${plan.annualLimit}">
+                        <dt>Annual Limit</dt>
+                        <dd>${plan.annualLimit}</dd>
+                    </div>
+                </dl>
+
+                <ul class="cmp-plan-comparison__features" data-sly-list.feature="${plan.features}">
+                    <li>${feature}</li>
+                </ul>
+
+                <div class="cmp-plan-comparison__card-footer">
+                    <label class="cmp-plan-comparison__compare-label">
+                        <input type="checkbox"
+                               class="cmp-plan-comparison__compare-check"
+                               data-cmp-hook-plan="compareCheck"
+                               value="${plan.id}"/>
+                        <span>Compare</span>
+                    </label>
+                    <a class="cmp-plan-comparison__cta"
+                       href="${plan.ctaLink ? plan.ctaLink : '#' @ extension='html'}">${plan.ctaLabel}</a>
+                </div>
+            </article>
+        </div>
+
+        <p class="cmp-plan-comparison__empty-filter"
+           data-cmp-hook-plan="emptyFilter"
+           hidden>No plans match the selected coverage category.</p>
+
+        <div class="cmp-plan-comparison__compare-tray"
+             data-cmp-hook-plan="compareTray"
+             hidden>
+            <div class="cmp-plan-comparison__tray-inner">
+                <div class="cmp-plan-comparison__tray-summary"
+                     data-cmp-hook-plan="compareSummary"></div>
+                <button type="button"
+                        class="cmp-plan-comparison__tray-clear"
+                        data-cmp-hook-plan="clearCompare">Clear selection</button>
+            </div>
+        </div>
+
+        <p class="cmp-plan-comparison__disclaimer"
+           data-sly-test="${model.disclaimer}">${model.disclaimer}</p>
+    </section>
+</sly>
+<!--/* Render Core Component empty-state placeholder in Edit mode; outputs nothing on Publish */-->
+<sly data-sly-call="${placeholderTemplate.placeholder @ isEmpty=!hasContent, classAppend='cmp-plan-comparison'}"></sly>
